@@ -1,28 +1,12 @@
 use std::{thread, time::Duration};
 use std::process::Command;
 use mki::{bind_key, Action, InhibitEvent, Keyboard, Sequence};
+pub mod utils;
 
-pub struct KeyBind {
-    pub keys: Vec<Keyboard>,
-    pub action: Box<dyn Fn() + Sync + Send>,
-}
+
 fn main() {
     println!("Hello, world!");
-    let binds  = vec![
-        KeyBind {
-            keys: vec![Keyboard::Space, Keyboard::B],
-            action: Box::new(|| {
-                start_application("Start Chrome")
-            })
-        },
-        KeyBind {
-            keys: vec![Keyboard::Space, Keyboard::T],
-            action : Box::new(|| {
-                start_application("Start WindowsTerminal")
-            })
-        },
-
-    ];
+    let binds  = utils::utils::build_keybinds();
     for keybind in binds {
         mki::register_hotkey(&keybind.keys, keybind.action)
     }
