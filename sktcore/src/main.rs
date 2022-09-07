@@ -1,12 +1,14 @@
-use std::{thread, time::Duration};
-use std::process::Command;
 use mki::{bind_key, Action, InhibitEvent, Keyboard, Sequence};
+use std::process::Command;
+use std::{thread, time::Duration};
+pub mod config;
 pub mod utils;
 
-
 fn main() {
-    println!("Hello, world!");
-    let binds  = utils::utils::build_keybinds();
+    let cfg = config::setup::load_config_json();
+
+    println!("{:?}", cfg);
+    let binds = utils::utils::build_keybinds();
     for keybind in binds {
         mki::register_hotkey(&keybind.keys, keybind.action)
     }
@@ -19,13 +21,5 @@ fn main() {
     //     start_application("Start WindowsTerminal")
 
     // });
-    loop{
-
-    }
+    loop {}
 }
-
-fn start_application(application: &str) {
-    Command::new("powershell").arg(application).spawn().expect("Failed to execute command");
-
-}
-

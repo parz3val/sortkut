@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 mki = "0.2.2"
+serde = "1.0.144"
+serde_json = "1.0"
